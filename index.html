@@ -20,6 +20,12 @@
         .bg-skt-red {
             background-color: #EA002C;
         }
+        .text-t-purple {
+            color: #4C4CFF;
+        }
+        .bg-t-purple {
+            background-color: #4C4CFF;
+        }
         .hero-bg {
             background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
@@ -58,6 +64,13 @@
         @keyframes slideUpFade {
             from { opacity: 0; transform: translate(-50%, 20px); }
             to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        /* Custom Radio Button Color */
+        input[type="radio"]:checked {
+            accent-color: #4C4CFF;
+        }
+        input[type="checkbox"]:checked {
+            accent-color: #4C4CFF;
         }
     </style>
 </head>
@@ -136,29 +149,32 @@
             <div class="text-center mb-12">
                  <h2 class="text-sm font-bold text-skt-red tracking-widest mb-2">SPECIAL OFFERS</h2>
                  <h2 class="text-3xl md:text-4xl font-black text-gray-900">특별한 혜택</h2>
+                 <p class="text-gray-500 mt-2 text-sm">배너를 클릭하시면 간편 신청이 가능합니다.</p>
             </div>
            
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Event 1 -->
-                <div class="relative rounded-2xl overflow-hidden shadow-lg group cursor-pointer h-80">
+                <div onclick="openApplicationModal('Galaxy S26 출시 / 사전예약')" class="relative rounded-2xl overflow-hidden shadow-lg group cursor-pointer h-80 transform transition hover:scale-[1.02]">
                     <img src="https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
                     <div class="absolute bottom-0 left-0 p-8 text-white">
                         <span class="bg-skt-red px-3 py-1 rounded text-xs font-bold mb-3 inline-block">EVENT</span>
                         <h3 class="text-2xl font-bold mb-2">Galaxy S26 출시 / 사전예약</h3>
                         <p class="text-gray-300 text-sm">백마장대리점 단독 추가 지원금 혜택을 놓치지 마세요.</p>
+                        <p class="mt-4 text-xs font-bold border border-white inline-block px-3 py-1 rounded-full hover:bg-white hover:text-black transition">간편 신청하기 <i class="fas fa-chevron-right ml-1"></i></p>
                     </div>
                 </div>
 
                 <!-- Event 2 -->
-                <div class="relative rounded-2xl overflow-hidden shadow-lg group cursor-pointer h-80">
+                <div onclick="openApplicationModal('인터넷 + TV 결합 특가')" class="relative rounded-2xl overflow-hidden shadow-lg group cursor-pointer h-80 transform transition hover:scale-[1.02]">
                     <img src="https://images.unsplash.com/photo-1526406915894-7bcd65f60845?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
                     <div class="absolute bottom-0 left-0 p-8 text-white">
                         <span class="bg-blue-600 px-3 py-1 rounded text-xs font-bold mb-3 inline-block">제휴</span>
                         <h3 class="text-2xl font-bold mb-2">인터넷 + TV 결합 시 현금 지원</h3>
                         <p class="text-gray-300 text-sm">온가족 할인과 더불어 최대 혜택을 드립니다.</p>
+                        <p class="mt-4 text-xs font-bold border border-white inline-block px-3 py-1 rounded-full hover:bg-white hover:text-black transition">간편 신청하기 <i class="fas fa-chevron-right ml-1"></i></p>
                     </div>
                 </div>
             </div>
@@ -180,6 +196,121 @@
             </div>
         </div>
     </section>
+
+    <!-- Application Modal (Hidden by default) -->
+    <div id="application-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-black bg-opacity-60 transition-opacity backdrop-blur-sm" onclick="closeApplicationModal()"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-200">
+                    
+                    <!-- Close Button -->
+                    <button type="button" onclick="closeApplicationModal()" class="absolute top-4 right-4 text-gray-400 hover:text-black z-20">
+                        <span class="sr-only">Close</span>
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+
+                    <div class="bg-white px-6 pb-6 pt-8">
+                        <div class="text-left w-full">
+                            <form id="application-form" class="space-y-5">
+                                <!-- Carrier -->
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-800 mb-3">현재 통신사</label>
+                                    <div class="flex justify-between">
+                                        <label class="inline-flex items-center cursor-pointer">
+                                            <input type="radio" name="carrier" class="w-4 h-4 text-t-purple border-gray-300 focus:ring-t-purple" value="SKT" checked>
+                                            <span class="ml-2 text-sm text-gray-700">SK텔레콤</span>
+                                        </label>
+                                        <label class="inline-flex items-center cursor-pointer">
+                                            <input type="radio" name="carrier" class="w-4 h-4 text-t-purple border-gray-300 focus:ring-t-purple" value="KT">
+                                            <span class="ml-2 text-sm text-gray-700">KT</span>
+                                        </label>
+                                        <label class="inline-flex items-center cursor-pointer">
+                                            <input type="radio" name="carrier" class="w-4 h-4 text-t-purple border-gray-300 focus:ring-t-purple" value="LG">
+                                            <span class="ml-2 text-sm text-gray-700">U+</span>
+                                        </label>
+                                        <label class="inline-flex items-center cursor-pointer">
+                                            <input type="radio" name="carrier" class="w-4 h-4 text-t-purple border-gray-300 focus:ring-t-purple" value="MVNO">
+                                            <span class="ml-2 text-sm text-gray-700">알뜰통신사</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Product -->
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-800 mb-1">제품 선택 <span class="text-xs font-normal text-gray-400 ml-1">신청 후 변경 가능</span></label>
+                                    <div class="flex space-x-2">
+                                        <input type="text" placeholder="기종" class="w-2/3 bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-t-purple focus:ring-1 focus:ring-t-purple transition">
+                                        <input type="text" placeholder="색상" class="w-1/3 bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-t-purple focus:ring-1 focus:ring-t-purple transition">
+                                    </div>
+                                    <div class="flex justify-end mt-2">
+                                        <label class="inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="w-4 h-4 text-t-purple border-gray-300 rounded focus:ring-t-purple">
+                                            <span class="ml-2 text-xs text-gray-500">실사용자가 달라요</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Name -->
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-800 mb-1">이름</label>
+                                    <input type="text" placeholder="이름" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-t-purple focus:ring-1 focus:ring-t-purple transition">
+                                </div>
+
+                                <!-- Phone -->
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-800 mb-1">휴대폰</label>
+                                    <input type="tel" placeholder="휴대폰 번호 (-없이 입력)" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-t-purple focus:ring-1 focus:ring-t-purple transition">
+                                </div>
+
+                                <!-- Gift -->
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-800 mb-1">T프리미엄 사은품</label>
+                                    <input type="text" placeholder="사은품 선택" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-t-purple focus:ring-1 focus:ring-t-purple transition">
+                                </div>
+
+                                <!-- Gift Info Box -->
+                                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                                    <h4 class="text-sm font-bold text-t-purple mb-2">T프리미엄 사은품 혜택</h4>
+                                    <ul class="text-xs text-gray-600 space-y-1.5">
+                                        <li class="flex items-start">
+                                            <span class="bg-t-purple text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] mr-2 flex-shrink-0 font-bold mt-0.5">1</span>
+                                            쓰던 요금제 그대로 사용 가능!
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="bg-t-purple text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] mr-2 flex-shrink-0 font-bold mt-0.5">2</span>
+                                            선택약정과 중복 제공!
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="bg-t-purple text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] mr-2 flex-shrink-0 font-bold mt-0.5">3</span>
+                                            의무 부가서비스 없이 제공!
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Consent -->
+                                <div class="border-t border-gray-100 pt-4">
+                                    <label class="flex items-center justify-between cursor-pointer group">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="w-4 h-4 text-t-purple border-gray-300 rounded focus:ring-t-purple" checked>
+                                            <span class="ml-2 text-sm font-bold text-gray-800">개인정보 수집 및 이용 동의 <span class="text-red-500 text-xs">(필수)</span></span>
+                                        </div>
+                                        <i class="fas fa-chevron-down text-gray-400 group-hover:text-gray-600"></i>
+                                    </label>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="button" onclick="submitApplicationForm()" class="w-full bg-gray-900 text-white font-bold py-4 rounded-xl hover:bg-black transition transform active:scale-95 duration-200 text-lg shadow-lg">
+                                    신청하기
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Services Section -->
     <section id="services" class="py-24 bg-gray-50">
@@ -422,119 +553,103 @@
 
         // Store Data (Updated with real photos where provided, and new high-quality placeholders for others)
         const stores = [
-            // Incheon - Uploaded Photos
             { 
                 name: "갈산점", 
                 type: "위탁", 
                 tel: "070-7996-4000", 
                 addr: "인천 부평구 평천로 328 (갈산동)", 
-                region: "incheon", 
-                img: "https://drive.google.com/drive/folders/1Tizrvp9PirG2h8i59noNrWsmkd8qqudS?usp=sharing/갈산.jpg" 
+                region: "incheon" 
             },
             { 
                 name: "검단점", 
                 type: "직영", 
                 tel: "070-7996-2042", 
                 addr: "인천 서구 원당대로 663 (마전동, 한종프라자)", 
-                region: "incheon", 
-                img: "https://drive.google.com/drive/folders/1Tizrvp9PirG2h8i59noNrWsmkd8qqudS?usp=sharing/검단.jpg" 
+                region: "incheon" 
             },
             { 
                 name: "계산역점", 
                 type: "위탁", 
                 tel: "070-7996-2700", 
                 addr: "인천 계양구 경명대로 1083 (계산동, 용선빌딩)", 
-                region: "incheon", 
-                img: "https://drive.google.com/drive/folders/1Tizrvp9PirG2h8i59noNrWsmkd8qqudS?usp=sharing/계산역.jpg" 
+                region: "incheon" 
             },
             { 
                 name: "계산직영점", 
                 type: "위탁", 
                 tel: "070-7996-2100", 
                 addr: "인천 계양구 주부토로 527 (계산동, 진주빌딩)", 
-                region: "incheon", 
-                img: "https://drive.google.com/drive/folders/1Tizrvp9PirG2h8i59noNrWsmkd8qqudS?usp=sharing/계산직영.jpg" 
+                region: "incheon" 
             },
             { 
                 name: "구월점", 
                 type: "위탁", 
                 tel: "070-7931-3600", 
                 addr: "인천 남동구 성말로 10 (구월동, 효명프라자)", 
-                region: "incheon", 
-                img: "https://drive.google.com/drive/folders/1Tizrvp9PirG2h8i59noNrWsmkd8qqudS?usp=sharing/구월.jpg" 
+                region: "incheon" 
             },
             { 
                 name: "마전점", 
                 type: "직영", 
                 tel: "070-7996-2070", 
                 addr: "인천 서구 완정로 61 (마전동, 윤성프라자)", 
-                region: "incheon", 
-                img: "https://drive.google.com/drive/folders/1Tizrvp9PirG2h8i59noNrWsmkd8qqudS?usp=sharing/마전.jpg" 
+                region: "incheon" 
             },
             { 
                 name: "부평역점", 
                 type: "위탁", 
                 tel: "070-7996-2000", 
                 addr: "인천 부평구 부평문화로 55 (부평동, YD타워)", 
-                region: "incheon", 
-                img: "https://drive.google.com/drive/folders/1Tizrvp9PirG2h8i59noNrWsmkd8qqudS?usp=sharing/부평역.png" 
+                region: "incheon" 
             },
             { 
                 name: "연희점", 
                 type: "위탁", 
                 tel: "070-7996-2300", 
                 addr: "인천 서구 서곶로 345 (연희동, 서광빌딩)", 
-                region: "incheon", 
-                img: "https://drive.google.com/drive/folders/1Tizrvp9PirG2h8i59noNrWsmkd8qqudS?usp=sharing/연희.jpg" 
+                region: "incheon" 
             },
-            // Incheon - New Fresh Images (Googled placeholders)
             { 
                 name: "모래내시장점", 
                 type: "직영", 
                 tel: "070-7996-3500", 
                 addr: "인천 남동구 호구포로 802 (구월동)", 
-                region: "incheon", 
-                img: "https://images.unsplash.com/photo-1541560052-77ec1bbc09f7" 
+                region: "incheon" 
             },
             { 
                 name: "서구청점", 
                 type: "위탁", 
                 tel: "070-7931-9005", 
                 addr: "인천 서구 탁옥로 58 (심곡동, 영일빌딩)", 
-                region: "incheon", 
-                img: "https://images.unsplash.com/photo-1596524430615-b46475ddff6e" 
+                region: "incheon" 
             },
             { 
                 name: "산곡점", 
                 type: "직영", 
                 tel: "070-7996-3400", 
                 addr: "인천 부평구 안남로 260 (산곡동, 현대상가)", 
-                region: "incheon", 
-                img: "https://images.unsplash.com/photo-1574634534894-89d7576c8259" 
+                region: "incheon" 
             },
             { 
                 name: "선학점", 
                 type: "위탁", 
                 tel: "070-7996-2200", 
                 addr: "인천 연수구 학나래로6번길 6 (선학동, 서천빌딩)", 
-                region: "incheon", 
-                img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4" 
+                region: "incheon" 
             },
             { 
                 name: "청천점", 
                 type: "위탁", 
                 tel: "032-225-1545", 
                 addr: "인천 부평구 마장로 489 (청천동, 아이즈빌아울렛)", 
-                region: "incheon", 
-                img: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c" 
+                region: "incheon" 
             },
             { 
                 name: "효성점", 
                 type: "직영", 
                 tel: "070-7996-2500", 
                 addr: "인천 계양구 안남로 565 (효성동)", 
-                region: "incheon", 
-                img: "https://images.unsplash.com/photo-1568992687947-86c470907f51" 
+                region: "incheon" 
             },
 
             // Seoul & Gyeonggi - Uploaded Photos
@@ -543,32 +658,28 @@
                 type: "위탁", 
                 tel: "070-7931-4800", 
                 addr: "서울 관악구 난곡로 193 (난곡동, K&J빌딩)", 
-                region: "seoul_gyeonggi", 
-                img: "난곡.jpg" 
+                region: "seoul_gyeonggi" 
             },
             { 
                 name: "남성역점", 
                 type: "위탁", 
                 tel: "070-7931-8200", 
                 addr: "서울 동작구 사당로13길 31 (사당동)", 
-                region: "seoul_gyeonggi", 
-                img: "남성역.jpg" 
+                region: "seoul_gyeonggi" 
             },
             { 
                 name: "광명소하점", 
                 type: "직영", 
                 tel: "070-7931-6000", 
                 addr: "경기 광명시 하안로 112 (소하동)", 
-                region: "seoul_gyeonggi", 
-                img: "광명소하.jpg" 
+                region: "seoul_gyeonggi" 
             },
             { 
                 name: "녹양점", 
                 type: "위탁", 
                 tel: "070-7996-3200", 
                 addr: "경기 의정부시 비우로 93 (녹양동)", 
-                region: "seoul_gyeonggi", 
-                img: "녹양.jpg" 
+                region: "seoul_gyeonggi" 
             },
             // Seoul & Gyeonggi - New Fresh Images
             { 
@@ -576,40 +687,35 @@
                 type: "위탁", 
                 tel: "070-7931-1800", 
                 addr: "서울 송파구 법원로11길 11 (문정동)", 
-                region: "seoul_gyeonggi", 
-                img: "https://images.unsplash.com/photo-1556742031-c6961e8560b0" 
+                region: "seoul_gyeonggi" 
             },
             { 
                 name: "시흥점", 
                 type: "직영", 
                 tel: "070-7931-9002", 
                 addr: "서울 금천구 금하로 679 (시흥동)", 
-                region: "seoul_gyeonggi", 
-                img: "https://images.unsplash.com/photo-1560179707-f14e90ef3623" 
+                region: "seoul_gyeonggi" 
             },
             { 
                 name: "부천점", 
                 type: "위탁", 
                 tel: "070-7996-3300", 
                 addr: "경기 부천시 부천로86 (원미동)", 
-                region: "seoul_gyeonggi", 
-                img: "https://images.unsplash.com/photo-1555421689-491a97ff2040" 
+                region: "seoul_gyeonggi" 
             },
             { 
                 name: "정자역점", 
                 type: "위탁", 
                 tel: "070-7931-1900", 
                 addr: "경기 성남시 분당구 정자일로 197 (정자동)", 
-                region: "seoul_gyeonggi", 
-                img: "https://images.unsplash.com/photo-1497215842964-222b430dc094" 
+                region: "seoul_gyeonggi" 
             },
             { 
                 name: "행신점", 
                 type: "위탁", 
                 tel: "070-7996-2002", 
                 addr: "경기 고양시 덕양구 충장로 134 (행신동)", 
-                region: "seoul_gyeonggi", 
-                img: "https://images.unsplash.com/photo-1481437642641-2f0ae875f836" 
+                region: "seoul_gyeonggi" 
             },
         ];
 
@@ -619,25 +725,37 @@
 
             stores.forEach(store => {
                 if (filter === 'all' || store.region === filter) {
-                    // Check if image is external URL (Unsplash) to append formatting params
-                    const imgSrc = store.img.startsWith('http') 
-                        ? `${store.img}?auto=format&fit=crop&w=600&q=80` 
-                        : store.img;
+                    // Type badge style
+                    const typeBadgeClass = store.type === '직영' 
+                        ? 'bg-skt-red text-white border-skt-red' 
+                        : 'bg-white text-gray-500 border-gray-300';
+
+                    // Google Maps Query
+                    const mapQuery = encodeURIComponent(store.addr);
 
                     const storeCard = `
-                        <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 group">
-                            <div class="h-48 bg-gray-200 relative overflow-hidden">
-                                <div class="absolute top-4 right-4 ${store.type === '직영' ? 'bg-skt-red' : 'bg-gray-700'} text-white text-xs font-bold px-2 py-1 rounded">
-                                    ${store.type}
+                        <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition duration-300 group border border-gray-200 p-6 flex flex-col justify-between h-full">
+                            <div>
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                                        백마장대리점 ${store.name}
+                                        <span class="text-xs px-2 py-0.5 rounded border ${typeBadgeClass} font-medium">
+                                            ${store.type}
+                                        </span>
+                                    </h3>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=${mapQuery}" target="_blank" class="text-gray-300 hover:text-skt-red transition transform hover:scale-110 cursor-pointer" title="구글 지도로 보기">
+                                        <i class="fas fa-store text-2xl"></i>
+                                    </a>
                                 </div>
-                                <img src="${imgSrc}" class="w-full h-full object-cover group-hover:scale-105 transition">
+                                <p class="text-gray-500 text-sm mb-6 flex items-start">
+                                    <i class="fas fa-map-marker-alt mr-2 mt-1 text-gray-400"></i>
+                                    <span class="break-keep">${store.addr}</span>
+                                </p>
                             </div>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold mb-2">백마장대리점 ${store.name}</h3>
-                                <p class="text-gray-500 text-sm mb-4 h-10 overflow-hidden"><i class="fas fa-map-marker-alt mr-2"></i>${store.addr}</p>
-                                <div class="flex justify-end items-center border-t pt-4">
-                                    <a href="tel:${store.tel}" class="text-skt-red font-bold text-sm hover:underline"><i class="fas fa-phone-alt mr-1"></i> ${store.tel}</a>
-                                </div>
+                            <div class="flex justify-end items-center pt-4 border-t border-gray-100 mt-auto">
+                                <a href="tel:${store.tel}" class="text-skt-red font-bold text-sm hover:underline flex items-center group-hover:scale-105 transition origin-right">
+                                    <i class="fas fa-phone-alt mr-2"></i> ${store.tel}
+                                </a>
                             </div>
                         </div>
                     `;
@@ -660,7 +778,41 @@
         // Initialize
         renderStores('all');
 
-        // Consultation Form Logic
+        // Modal Logic
+        function openApplicationModal(productName) {
+            const modal = document.getElementById('application-modal');
+            modal.classList.remove('hidden');
+            
+            // If product name is passed, pre-fill it (optional)
+            if (productName) {
+                // You could target a specific input if you had an ID for product input
+                // document.getElementById('product-input').value = productName;
+            }
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeApplicationModal() {
+            const modal = document.getElementById('application-modal');
+            modal.classList.add('hidden');
+            
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        function submitApplicationForm() {
+            // Here you would typically handle the form submission via AJAX
+            // For now, we simulate success
+            
+            closeApplicationModal();
+            showToast('신청이 완료되었습니다. 상담원이 곧 연락드리겠습니다.', 'success');
+            
+            // Reset form
+            document.getElementById('application-form').reset();
+        }
+
+        // Consultation Form Logic (Bottom Section)
         function submitConsultation() {
             const name = document.getElementById('consult-name').value;
             const phone = document.getElementById('consult-phone').value;
@@ -691,7 +843,7 @@
             const bgColor = type === 'error' ? 'bg-red-600' : 'bg-green-600';
             const icon = type === 'error' ? '<i class="fas fa-exclamation-circle mr-2"></i>' : '<i class="fas fa-check-circle mr-2"></i>';
 
-            toast.className = `fixed bottom-10 left-1/2 transform -translate-x-1/2 ${bgColor} text-white px-6 py-4 rounded-full shadow-2xl z-50 flex items-center min-w-[300px] justify-center transition-all duration-300 opacity-0 translate-y-10`;
+            toast.className = `fixed bottom-10 left-1/2 transform -translate-x-1/2 ${bgColor} text-white px-6 py-4 rounded-full shadow-2xl z-[200] flex items-center min-w-[300px] justify-center transition-all duration-300 opacity-0 translate-y-10`;
             toast.innerHTML = `${icon}<span class="font-bold">${message}</span>`;
 
             document.body.appendChild(toast);
